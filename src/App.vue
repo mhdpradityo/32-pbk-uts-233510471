@@ -1,5 +1,12 @@
 <template>
-  <div class="todo-container">
+  <div :class="['todo-container', { dark: isDarkMode }]">
+    <div class="dark-mode-toggle">
+      <label class="switch">
+        <input type="checkbox" v-model="isDarkMode" />
+        <span class="slider"></span>
+      </label>
+      <span>{{ isDarkMode ? "🌙 Dark Mode" : "🌞 Light Mode" }}</span>
+    </div>
     <h1>Daftar Kegiatan Saya</h1>
     <div class="input-group">
       <input type="text" v-model="newTask" placeholder="Tambahkan Kegiatan..." />
@@ -29,6 +36,7 @@ import { ref, computed } from "vue";
 const newTask = ref("");
 const tasks = ref([]);
 const showOnlyIncomplete = ref(false);
+const isDarkMode = ref(false);
 
 const addTask = () => {
   if (newTask.value.trim()) {
