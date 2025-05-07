@@ -5,8 +5,14 @@
       <input type="text" v-model="newTask" placeholder="Tambahkan Kegiatan..." />
       <button @click="addTask">Tambahkan Kegiatan</button>
     </div>
+    <div class="filter-group">
+      <label>
+        <input type="checkbox" v-model="showOnlyIncomplete" />
+        Tampilkan Hanya Yang Belum Selesai
+      </label>
+    </div>
     <ul class="task-list">
-      <li v-for="(task, index) in tasks" :key="index">
+      <li v-for="(task, index) in filteredTasks" :key="index">
         <label>
           <input type="checkbox" v-model="task.completed" />
           <span :class="{ done: task.completed }">{{ task.text }}</span>
@@ -18,10 +24,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const newTask = ref("");
 const tasks = ref([]);
+const showOnlyIncomplete = ref(false);
 
 const addTask = () => {
   if (newTask.value.trim()) {
@@ -33,4 +40,10 @@ const addTask = () => {
 const removeTask = (index) => {
   tasks.value.splice(index, 1);
 };
+
+const filteredTasks = computed(() => {
+  return showOnlyIncomplete.value
+    ? tasks.value.filter((task) => !task.completed)
+    : tasks.value;
+});
 </script>
