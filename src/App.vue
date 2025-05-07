@@ -11,6 +11,7 @@
           <input type="checkbox" v-model="task.completed" />
           <span :class="{ done: task.completed }">{{ task.text }}</span>
         </label>
+        <button @click="removeTask(index)">Hapus</button>
       </li>
     </ul>
   </div>
@@ -27,5 +28,9 @@ const addTask = () => {
     tasks.value.push({ text: newTask.value, completed: false });
     newTask.value = "";
   }
+};
+
+const removeTask = (index) => {
+  tasks.value.splice(index, 1);
 };
 </script>
