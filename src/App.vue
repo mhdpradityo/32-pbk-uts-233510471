@@ -7,7 +7,10 @@
     </div>
     <ul class="task-list">
       <li v-for="(task, index) in tasks" :key="index">
-        {{ task.text }}
+        <label>
+          <input type="checkbox" v-model="task.completed" />
+          <span :class="{ done: task.completed }">{{ task.text }}</span>
+        </label>
       </li>
     </ul>
   </div>
@@ -21,7 +24,7 @@ const tasks = ref([]);
 
 const addTask = () => {
   if (newTask.value.trim()) {
-    tasks.value.push({ text: newTask.value });
+    tasks.value.push({ text: newTask.value, completed: false });
     newTask.value = "";
   }
 };
